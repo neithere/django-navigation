@@ -1,0 +1,32 @@
+Changelog before extracting into separate repository:
+
+changeset:   44:890ae3bd4d1b
+user:        Andy Mikhailenko <neithere@gmail.com>
+date:        Thu Oct 30 03:47:19 2008 +0500
+summary:     navigation app: Fix bug introduced in previous revision. (Middleware name must be the full string, not a substring: it is looked up in a list)
+
+changeset:   43:d4bef747556f
+user:        Andy Mikhailenko <neithere@gmail.com>
+date:        Tue Oct 28 11:46:49 2008 +0500
+summary:     navigation app: Insert dummy crumbs into the nav. path to avoid breaking design with orphans (of course, the links won't work anyway).
+
+changeset:   42:825754d5661d
+user:        Andy Mikhailenko <neithere@gmail.com>
+date:        Tue Oct 28 09:07:59 2008 +0500
+summary:     navigation app: Replace AssertionError with CannotResolveCrumb exception. This exception does not propagate to client code and, thus, does not break it.
+
+changeset:   9:af57055830ad
+user:        Andy Mikhailenko <neithere@gmail.com>
+date:        Mon Aug 04 03:12:21 2008 +0600
+summary:     Move navigation app settings into code itself to simplify things and avoid portability issues.
+
+changeset:   7:20692943e906
+user:        Andy Mikhailenko <neithere@gmail.com>
+date:        Sun Aug 03 19:19:00 2008 +0100
+summary:     Remove modules deprecated by the new navigation app
+
+changeset:   6:b366a406b9fc
+parent:      4:4e613e6cd0ca
+user:        Andy Mikhailenko <neithere@gmail.com>
+date:        Mon Aug 04 00:07:00 2008 +0600
+summary:     Add navigation app.
