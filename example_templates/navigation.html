@@ -1,0 +1,29 @@
+<!-- This is just an example. Actual templates may be completely different to fit design requirements. -->
+
+{% load wiki %}
+
+<ul class="sections">
+{% for section in sections %}
+	{% if section.is_current %}
+		{% if trail %}
+			<li><a href="{{ section.url }}" class="current">{{ section.title|render_wiki:"plain" }}</a></li>
+		{% else %}
+			<li><h1>{{ section.title|render_wiki:"plain" }}</h1></li>
+		{% endif %}
+	{% else %}
+		<li><a href="{{ section.url }}">{{ section.title|render_wiki:"plain" }}</a></li>
+	{% endif %}
+{% endfor %}
+</ul>
+
+{% if trail %}
+<div class="trail">
+{% for item in trail %}
+	{% if forloop.last %}
+		<h1>{{ item.title|render_wiki:"plain" }}</h1>
+	{% else %}
+		<a href="{{ item.url }}">{{ item.title|render_wiki:"plain" }}</a> &rarr;
+	{% endif %}
+{% endfor %}
+</div>
+{% endif %}
