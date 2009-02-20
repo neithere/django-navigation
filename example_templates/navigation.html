@@ -1,17 +1,35 @@
-<!-- This is just an example. Actual templates may be completely different to fit design requirements. -->
+<!-- This is just an example.
+Actual templates may be completely different to fit design requirements.
+-->
 
-<!-- example:
+<!-- This template consists of two parts:
+     1. Site sections (e.g. "home", "about", "blog"); they are defined in site settings
+     2. Trail (e.g. "2009 - 02 - Hello world!"); built recursively depending on request.path.
+-->
 
-- Home
-- Blog
-- About
+<!--
+================
+1. SITE SECTIONS (shows always)
+================-->
 
-or:
+<!--
+If current path is "/blog/":
 
-- Home
-- Blog
-- ABOUT     // if this section is the active document
+<ul class="sections">
+    <li><a href="/">Home</a></li>
+    <li><h1>Blog</h1></li>
+    <li><a href="/about/">About</h1></li>
+</ul>
 
+If current path is "/blog/2009/02/hello-world/" or like that:
+
+<ul class="sections">
+    <li><a href="/">Home</a></li>
+    <li><a href="/blog/" class="current">Blog</a></li>
+    <li><a href="/about/">About</a></li>
+</ul>
+
+Here's how we implement it:
 -->
 
 <ul class="sections">
@@ -20,7 +38,7 @@ or:
 		{% if trail %}
 			<li><a href="{{ section.url }}" class="current">{{ section.title }}</a></li>
 		{% else %}
-			<li><h1>{{ section.title|render_wiki:"plain" }}</h1></li>
+			<li><h1>{{ section.title }}</h1></li>
 		{% endif %}
 	{% else %}
 		<li><a href="{{ section.url }}">{{ section.title }}</a></li>
@@ -28,10 +46,17 @@ or:
 {% endfor %}
 </ul>
 
-<!-- example:
+<!--
+=====================
+2. BREAD CRUMBS TRAIL (shows if current path points to a document _within_ some section)
+=====================-->
 
-2009 -> February -> MY BLOG POST
+<!-- 
+If current path is "/blog/2009/02/hello-world/" or like that:
 
+<div class="trail">
+    <a href="/2009/">2009</a> → <a href="/2009/02/">February</a> → <h1>Hello world!</h1>
+</div>
 -->
 
 {% if trail %}
