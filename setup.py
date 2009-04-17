@@ -12,15 +12,15 @@
 
 " Django Navigation setup "
 
-from distutils.core import setup
+from setuptools import setup, find_packages
 from navigation import __version__
 
 setup(
     name         = 'django-navigation',
     version      = __version__,
-    packages     = ['navigation'],
+    packages     = find_packages(exclude=['example']),
     
-    install_requires = ['python >= 2.4', 'django >= 1.0'],
+    install_requires = ['django >= 1.0'],
     
     description  = 'A breadcrumbs navigation application for Django framework.',
     author       = 'Andy Mikhailenko',
