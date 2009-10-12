@@ -129,7 +129,10 @@ def find_crumb_by_callback(url, request):
         if isinstance(bc, basestring):
             title = bc
         else:
-            title = bc(request, *callback_args, **callback_kwargs)
+            if hasattr(bc, '__call__'):
+                title = bc(request, *callback_args, **callback_kwargs)
+            else:
+                title = unicode(bc)    # handle i18n proxy objects
         return Crumb(url,title)
     except http.Http404, e:
         raise CannotResolveCrumb, e
