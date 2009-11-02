@@ -2,3 +2,6 @@
 \.pyc$
 \.mo$
 ^\.directory$
+^build/
+^dist/
+.egg-info
