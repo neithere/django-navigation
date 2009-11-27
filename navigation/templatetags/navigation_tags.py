@@ -12,6 +12,9 @@ Unified templated breadcrumbs for both FlatPages and custom views support by:
 Andy Mikhailenko <http://neithere.net>, <neithere@gmail.com>
 """
 
+# TODO: tags instead of filters
+
+
 # Python
 from urlparse import urljoin
 
@@ -25,6 +28,7 @@ from django.utils.http import urlquote
 from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
 
+
 # A list of site sections' URLs in desired order, i.e.:
 #   NAVIGATION_SECTIONS = ('/about/', '/news/')
 SECTIONS = getattr(settings, 'NAVIGATION_SECTIONS', ())
@@ -36,20 +40,29 @@ if 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware' in settings.
 else:
     ENABLE_FLATPAGES = False
 
+
 register = template.Library()
 
-class Crumb:
-    """ A 'crumb' is just a navigation item """
+
+class Crumb(object):
+    """
+    A navigation node.
+    """
+
     def __init__(self, url, title, is_current=False, is_dummy=False):
         self.url        = url
         self.title      = title
         self.is_current = is_current
         self.is_dummy   = is_dummy
-    __unicode__ = lambda self: self.url
 
-@register.filter(name='get_navigation')
-def get_navigation(request):
-    # Prepare sections (horizontal cut, base level)
+    def __unicode__(self):
+        return unicode(self.title)
+
+
+def _get_sections(request):
+    """
+    Returns list of sections (horizontal cut, base level).
+    """
 
     sections = []
     for section_url in SECTIONS:
@@ -63,12 +76,18 @@ def get_navigation(request):
                     crumb.is_current = True
             sections.append(crumb)
 
-    # Prepare trail (vertical cut, excluding base level)
+    return sections
 
+def _get_trail(request, exclude_section=False):
+    """
+    Returns trail of breadcrumbs (vertical cut, excluding base level)
+    """
     trail = []
     url = request.path
     while url:
-        if url == '/'  or  url in SECTIONS:
+        if url == '/':
+            break
+        if exclude_section and url in SECTIONS:
             break
         crumb = find_crumb(url, request)
         if not crumb:
@@ -79,6 +98,21 @@ def get_navigation(request):
         url = urljoin(url, '..')
 
     trail.reverse()
+
+    return trail
+
+@register.filter
+def get_sections(request):
+    return _get_sections(request)
+
+@register.filter
+def get_trail(request, exclude_section=False):
+    return _get_trail(request, exclude_section)
+
+@register.filter
+def get_navigation(request):
+    sections = _get_sections(request)
+    trail = _get_trail(request, exclude_section=True)
 
     return mark_safe(render_to_string('navigation.html', dict(sections=sections,trail=trail)))
 
