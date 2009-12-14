@@ -102,6 +102,10 @@ def _get_trail(request, exclude_section=False):
     return trail
 
 @register.filter
+def get_title(request):
+    return find_crumb(request.path, request)
+
+@register.filter
 def get_sections(request):
     return _get_sections(request)
 
