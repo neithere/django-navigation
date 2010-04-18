@@ -38,44 +38,6 @@ def _resolve_url(request, url):
     return urlresolver.resolve(url)
 
 @crumb_resolver
-def _resolve_by_settings(request, url):
-    """
-    Finds appropriate URL in settings variable ``NAVIGATION_URL_MAP`` and
-    processes
-    """
-    if not hasattr(settings, 'NAVIGATION_URL_MAP'):
-        return None
-
-    try:
-        endpoint, args, kwargs = _resolve_url(request, url)
-    except urlresolvers.Resolver404:
-        return None
-
-    print
-    print '*** need a crumb for', endpoint, args, kwargs
-    for name, crumb_func in settings.NAVIGATION_URL_MAP:
-        if name == url:
-            return crumb_func(request, *args, **kwargs)
-            print 'muhaha'
-        else:
-            print name, url
-        print '*** trying', name, args, kwargs
-        try:
-            print endpoint, 'vs', crumb_func, 'vs', args, kwargs
-#            print '*** reversing', endpoint, args, kwargs
-#            reversed_url = urlresolvers.reverse(name, args=args, kwargs=kwargs)
-        except urlresolvers.NoReverseMatch:
-            print '*** ...no reverse match.'
-            continue
-        else:
-            print '*** matched'
-#            if url == reversed_url:
-#                print '*** MATCHED!'
-#                return crumb_func(request, args, kwargs)
-#            print '***', url, '!=', reversed_url
-    return None
-
-@crumb_resolver
 def _resolve_flatpage(request, url):
     path = 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
     if path not in settings.MIDDLEWARE_CLASSES:
