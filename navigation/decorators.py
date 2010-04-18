@@ -24,7 +24,7 @@ def breadcrumb(crumb):
     def wrapper(view):
         def inner(request, *args, **kwargs):
             return view(request, *args, **kwargs)
-        inner.__dict__ = dict(view.__dict__, navigation=crumb)  # TODO: rename "navigation" to "breadcrumb"
+        inner.__dict__ = dict(view.__dict__, breadcrumb=crumb)
         inner.__name__ = view.__name__
         return inner
     return wrapper
