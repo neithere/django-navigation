@@ -61,7 +61,11 @@ def _resolve_by_callback(request, url):
     must follow the views API (i.e. the only required argument is request
     object). It is also expected to return a `unicode` value.
     """
-    callback, args, kwargs = _resolve_url(request, url)
+    try:
+        callback, args, kwargs = _resolve_url(request, url)
+    except urlresolvers.Resolver404:
+        return None
+
     bc = getattr(callback, 'breadcrumb', None)
     if bc is None:
         bc = getattr(callback, 'navigation', None)
