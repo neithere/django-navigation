@@ -6,6 +6,14 @@
 #  General Public License version 3 (LGPLv3) as published by the Free
 #  Software Foundation. See the file README for copying conditions.
 #
+"""
+Decorators
+==========
+"""
+from functools import wraps
+
+__all__ = ['breadcrumb']
+
 
 def breadcrumb(crumb):
     """
@@ -20,11 +28,12 @@ def breadcrumb(crumb):
         @breadcrumb(lambda request: 'greeting for %s' % request.user.username)
         def some_view(request):
             return 'Hello %s!' % request.user.username
+
     """
     def wrapper(view):
+        @wraps(view)
         def inner(request, *args, **kwargs):
             return view(request, *args, **kwargs)
-        inner.__dict__ = dict(view.__dict__, breadcrumb=crumb)
-        inner.__name__ = view.__name__
+        inner.breadcrumb = crumb
         return inner
     return wrapper

@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
+"""
+Template tags and filters
+=========================
+
+Loading::
+
+    {% load navigation_tags %}
 
 """
-Universal breadcrumbs navigation for Django.
 
-FlatPages trail by:
-jca <http://djangosnippets.org/snippets/519/>
-
-Original idea and implementation of universal breadcrumbs for custom views by:
-Thomas Guettler <http://groups.google.com/group/django-users/browse_thread/thread/f40f59e39cef59c4>
-
-Unified extensible templated breadcrumbs for both FlatPages and custom views by:
-Andrey Mikhaylenko <http://neithere.net>, <andy@neithere.net>
-"""
+__all__ = ['get_sections', 'get_trail', 'get_navigation']
 
 # TODO: tags instead of filters
 
@@ -81,18 +79,30 @@ def _get_trail(request, exclude_section=False):
 
 @register.filter
 def get_title(request):
+    """ Returns current page's title. """
     return find_crumb(request)
 
 @register.filter
 def get_sections(request):
+    """ Returns a list of :term:`sections`. """
     return _get_sections(request)
 
 @register.filter
 def get_trail(request, exclude_section=False):
+    """ Returns the trail of :term:`breadcrumbs`. Each breadcrumb is
+    represented by a :class:`navigation.helpers.Crumb` instance.
+    """
     return _get_trail(request, exclude_section)
 
 @register.filter
 def get_navigation(request):
+    """ Returns the rendered navigation block. Requires that the
+    `navigation.html` template exists. Two context variables are passed to it:
+
+    * sections (see :func:`get_sections`)
+    * trail (see :func:`get_trail`)
+
+    """
     sections = _get_sections(request)
     trail = _get_trail(request, exclude_section=True)
 
