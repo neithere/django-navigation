@@ -25,12 +25,13 @@ def find_crumb(request, url=None):
     for resolver in RESOLVERS:
         crumb = resolver(request, url)
         if crumb is not None:
+            crumb.is_current = bool(url == request.path)
             return crumb
 
     # TODO return None instead of a fake breadcrumb object
     # (this will be a backwards-incompatible change)
     # OTOH, maybe we still need this to store the partial URL?
-    return Crumb(url, '???', is_dummy=True)
+    return Crumb(url, u'???', is_dummy=True)
 
 def _resolve_url(url, request=None):
     urlconf  = getattr(request, "urlconf", settings.ROOT_URLCONF)
