@@ -20,6 +20,10 @@ class Crumb(object):
         `True` if this breadcrumb's URL corresponds to the current request
         path.
 
+    .. attribute:: is_active
+
+        `True` if current request path begins with this breadcrumb's URL.
+
     .. attribute:: is_dummy
 
         `True` if this breadcrumb is a stub, i.e. its URL could not be resolved
@@ -30,6 +34,7 @@ class Crumb(object):
         self.url        = url
         self.title      = title
         self.is_current = is_current
+        self.is_active  = is_active
         self.is_dummy   = is_dummy
 
     def __unicode__(self):

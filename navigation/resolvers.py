@@ -26,6 +26,7 @@ def find_crumb(request, url=None):
         crumb = resolver(request, url)
         if crumb is not None:
             crumb.is_current = bool(url == request.path)
+            crumb.is_active = bool(url.startswith(request.path))
             return crumb
 
     # TODO return None instead of a fake breadcrumb object
