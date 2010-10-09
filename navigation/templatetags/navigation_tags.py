@@ -250,4 +250,4 @@ def crumb_link(context, name, *args, **kwargs):
     """
     url = reverse(name, args=args, kwargs=kwargs)
     label = find_crumb(context['request'], url)
-    return u'<a href="{url}">{label}</a>'.format(**locals())
+    return u'<a href="%s">%s</a>' % (url, label)
