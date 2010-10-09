@@ -64,7 +64,7 @@ def parse_tokens(tokens):
     # {% tag_name arg1 arg2 arg3 as variable %}
     # {% tag_name arg1 arg2 arg3 %}
     tag_name = items[0]
-    if "as" == items[-2]:
+    if 1 < len(items) and "as" == items[-2]:
         var_name = items[-1]
         args = items[1:-2]
     else:
