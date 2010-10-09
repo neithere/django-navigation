@@ -30,7 +30,8 @@ class Crumb(object):
         by a :term:`crumb resolver`.
 
     """
-    def __init__(self, url, title, is_current=False, is_dummy=False):
+    def __init__(self, url, title, is_current=False, is_active=False,
+                 is_dummy=False):
         self.url        = url
         self.title      = title
         self.is_current = is_current
