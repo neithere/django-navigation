@@ -32,7 +32,7 @@ def find_crumb(request, url=None):
     # OTOH, maybe we still need this to store the partial URL?
     return Crumb(url, '???', is_dummy=True)
 
-def _resolve_url(request, url):
+def _resolve_url(url, request=None):
     urlconf  = getattr(request, "urlconf", settings.ROOT_URLCONF)
     urlresolver = urlresolvers.RegexURLResolver(r'^/', urlconf)
     return urlresolver.resolve(url)
@@ -62,7 +62,7 @@ def _resolve_by_callback(request, url):
     object). It is also expected to return a `unicode` value.
     """
     try:
-        callback, args, kwargs = _resolve_url(request, url)
+        callback, args, kwargs = _resolve_url(url, request)
     except urlresolvers.Resolver404:
         return None
 

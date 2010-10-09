@@ -2,6 +2,10 @@ Django Navigation is a breadcrumbs navigation application for Django Web
 Framework. Initially written by Andy Mikhailenko in 2008.
 See the file AUTHORS for a complete authors list of this application.
 
+Documentation:
+
+    http://packages.python.org/django-navigation/
+
 Please feel free to submit patches, report bugs or request features:
 
     http://bitbucket.org/neithere/django-navigation/
