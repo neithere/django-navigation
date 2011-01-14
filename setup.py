@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Copyright (c) 2008-2009 Andy Mikhailenko and contributors
+#  Copyright (c) 2008-2010 Andy Mikhailenko and contributors
 #
 #  This file is part of Django Navigation.
 #
@@ -10,17 +10,17 @@
 #  Software Foundation. See the file README for copying conditions.
 #
 
-" Django Navigation setup "
+"Django Navigation setup"
 
-from setuptools import setup, find_packages
+from distutils.core import setup
 from navigation import __version__
 
 setup(
     name         = 'django-navigation',
     version      = __version__,
-    packages     = find_packages(exclude=['example']),
+    packages     = ['navigation'],
 
-    install_requires = ['django >= 1.0'],
+    requires     = ['django (>= 1.0)'],
 
     description  = 'A breadcrumbs navigation application for Django framework.',
     author       = 'Andy Mikhailenko',
