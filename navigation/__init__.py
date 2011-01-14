@@ -12,4 +12,4 @@
 __author__  = 'Andy Mikhailenko'
 __license__ = 'GNU Lesser General Public License (GPL), Version 3'
 __url__     = 'http://bitbucket.org/neithere/django-navigation/'
-__version__ = '0.6.6'
+__version__ = '0.6.7'

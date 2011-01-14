@@ -18,7 +18,7 @@ from navigation import __version__
 setup(
     name         = 'django-navigation',
     version      = __version__,
-    packages     = ['navigation'],
+    packages     = ['navigation', 'navigation.templatetags'],
 
     requires     = ['django (>= 1.0)'],
 
