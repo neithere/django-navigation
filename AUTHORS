@@ -1,0 +1,17 @@
+Django Navigation was originally created by:
+
+* Andy Mikhailenko <andy@neithere.net>.
+
+Initially the library was based on the snippets by:
+
+* jca
+  <http://djangosnippets.org/snippets/519/>
+* Thomas Guettler
+  <http://groups.google.com/group/django-users/browse_thread/thread/f40f59e39cef59c4>
+
+And here is a probably incomplete list of contributors -- people
+who have submitted patches, reported bugs, added translations and
+generally made django-navigation better:
+
+* Mikhail Korobov
+* Your Name Here ;)
