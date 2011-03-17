@@ -8,3 +8,5 @@
 ^docs/_build/
 ^dist/
 .egg-info
+^\.coverage
+^cover/

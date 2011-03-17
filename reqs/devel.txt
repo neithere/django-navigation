@@ -1,0 +1,5 @@
+# 1.2.x doesn't provide RequestFactory
+-e svn+http://code.djangoproject.com/svn/django/trunk@15852#egg=Django-1.3_rc_1-py2.6-dev_r15852
+
+coverage >= 3.4
+django-coverage >= 1.1.1

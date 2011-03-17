@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Copyright (c) 2008-2010 Andy Mikhailenko and contributors
+#  Copyright (c) 2008-2011 Andy Mikhailenko and contributors
 #
 #  This file is part of Django Navigation.
 #
@@ -9,29 +9,41 @@
 #  General Public License version 3 (LGPLv3) as published by the Free
 #  Software Foundation. See the file README for copying conditions.
 #
-
-"Django Navigation setup"
-
+import os
 from distutils.core import setup
-from navigation import __version__
+
+from _version import version
+
+
+readme = open(os.path.join(os.path.dirname(__file__), 'README')).read()
 
 setup(
+    # overview
     name         = 'django-navigation',
-    version      = __version__,
+    description  = 'Extensible breadcrumbs navigation for Django.',
+    long_description = readme,
+
+    # technical info
+    version      = version,
     packages     = ['navigation', 'navigation.templatetags'],
-
     requires     = ['django (>= 1.0)'],
+    provides     = ['navigation'],
 
-    description  = 'A breadcrumbs navigation application for Django framework.',
+    # copyright
     author       = 'Andy Mikhailenko',
     author_email = 'andy@neithere.net',
+    license      = 'GNU Lesser General Public License (LGPL), Version 3',
+
+    # more info
     url          = 'http://bitbucket.org/neithere/django-navigation/',
     download_url = 'http://bitbucket.org/neithere/django-navigation/src/',
-    license      = 'GNU Lesser General Public License (LGPL), Version 3',
+
+    # categorization
     keywords     = 'django breadcrumbs navigation',
     classifiers  = [
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
+        'Environment :: Plugins',
         'Framework :: Django',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
@@ -40,4 +52,7 @@ setup(
         'Topic :: Software Development :: User Interfaces',
         'Topic :: Software Development :: Widget Sets',
     ],
+
+    # release sanity check
+    test_suite = 'nose.collector',
 )
