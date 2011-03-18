@@ -64,7 +64,7 @@ urlpatterns = patterns('',
 
 #-- Tests
 
-class NavigationTestCase(TestCase):
+class NavigationTest(TestCase):
     urls = urlpatterns
 
     def setUp(self):
@@ -84,7 +84,7 @@ class NavigationTestCase(TestCase):
 
         return request
 
-    def assertCrumb(self, url, expected_title, with_middleware=False):
+    def assertTitle(self, url, expected_title, with_middleware=False):
         """Asserts that given URL can be resolved to a Crumb object which, in
         turn, will contain given title.
         """
@@ -111,46 +111,46 @@ class NavigationTestCase(TestCase):
             raise AssertionError('view found, expected to be missing')
 
 
-class BasicResolverTestCase(NavigationTestCase):
+class BasicResolverTest(NavigationTest):
 
     def test_missing(self):
-        self.assertCrumb('--missing--', '???')
+        self.assertTitle('--missing--', '???')
         self.assertViewMissing('--missing--')
 
     def test_nested_missing(self):
         url = '/nested/--missing--/'
-        self.assertCrumb(url, '???')
+        self.assertTitle(url, '???')
         self.assertViewMissing(url)
 
 
-class CallbackResolverTestCase(NavigationTestCase):
+class CallbackResolverTest(NavigationTest):
 
     def test_untitled(self):
         url = '/untitled/'
-        self.assertCrumb(url, '???')
+        self.assertTitle(url, '???')
         self.assertView(url)
 
     def test_attribute_string(self):
-        self.assertCrumb('/attr/string/', 'String')
+        self.assertTitle('/attr/string/', 'String')
 
     def test_attribute_lazy_string(self):
-        self.assertCrumb('/attr/lazy/', 'Lazy')
+        self.assertTitle('/attr/lazy/', 'Lazy')
 
     def test_attribute_callable(self):
-        self.assertCrumb('/attr/callable/', 'Callable')
+        self.assertTitle('/attr/callable/', 'Callable')
 
     def test_decorator(self):
         url = '/deco/'
-        self.assertCrumb(url, 'Decorated')
+        self.assertTitle(url, 'Decorated')
         self.assertView(url)
 
     def test_nested_discoverable(self):
         url = '/nested/string/'
-        self.assertCrumb(url, 'String')
+        self.assertTitle(url, 'String')
         self.assertView(url)
 
 
-class FlatpageResolverTestCase(NavigationTestCase):
+class FlatpageResolverTest(NavigationTest):
     # Test settings must include this middleware:
     # django.contrib.flatpages.middleware.FlatpageFallbackMiddleware
 
@@ -159,30 +159,30 @@ class FlatpageResolverTestCase(NavigationTestCase):
     def test_no_middleware(self):
         mw = settings.MIDDLEWARE_CLASSES
         settings.MIDDLEWARE_CLASSES = [x for x in mw if 'Flatpage' not in x]
-        self.assertCrumb('/flatpages/test/', '???')
+        self.assertTitle('/flatpages/test/', '???')
         settings.MIDDLEWARE_CLASSES = mw
 
     def test_page_missing(self):
-        self.assertCrumb('--missing--', '???', with_middleware=True)
+        self.assertTitle('--missing--', '???', with_middleware=True)
 
     def test_page_exists(self):
-        self.assertCrumb('/flatpages/test/', 'Test Page', with_middleware=True)
+        self.assertTitle('/flatpages/test/', 'Test Page', with_middleware=True)
 
 
-class SettingsNamesResolverTestCase(NavigationTestCase):
+class SettingsNamesResolverTest(NavigationTest):
     def test_string(self):
         url = '/mapped/name/string/'
-        self.assertCrumb(url, 'string mapped by name')
+        self.assertTitle(url, 'string mapped by name')
 
     def test_callable(self):
         url = '/mapped/name/callable/'
-        self.assertCrumb(url, 'callable mapped by name')
+        self.assertTitle(url, 'callable mapped by name')
 
-class SettingsUrlsResolverTestCase(NavigationTestCase):
+class SettingsUrlsResolverTest(NavigationTest):
     def test_string(self):
         url = '/mapped/url/string/'
-        self.assertCrumb(url, 'string mapped by url')
+        self.assertTitle(url, 'string mapped by url')
 
     def test_callable(self):
         url = '/mapped/url/callable/'
-        self.assertCrumb(url, 'callable mapped by url')
+        self.assertTitle(url, 'callable mapped by url')
