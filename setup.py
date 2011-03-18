@@ -12,6 +12,18 @@
 import os
 from distutils.core import setup
 
+COMMANDS = {}
+try:
+    from sphinx.setup_command import BuildDoc
+    COMMANDS['build_sphinx'] = BuildDoc
+except ImportError:
+    pass
+try:
+    from sphinx_pypi_upload import UploadDoc
+    COMMANDS['upload_sphinx'] = UploadDoc
+except ImportError:
+    pass
+
 from _version import version
 
 
@@ -53,6 +65,6 @@ setup(
         'Topic :: Software Development :: Widget Sets',
     ],
 
-    # release sanity check
-    test_suite = 'nose.collector',
+    # devel
+    cmdclass = COMMANDS,
 )
