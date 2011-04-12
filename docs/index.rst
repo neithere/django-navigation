@@ -30,12 +30,13 @@ way::
 
 So we just type this in our template::
 
+    {% get_breadcrumb_trail as trail %}
     <ul>
-    {% for crumb in request|get_trail %}
+    {% for crumb in trail %}
         <li><a href="{{ crumb.url }}">{{ crumb }}</a></li>
     {% endfor %}
     </ul>
-    <h1>{{ request|get_section }}
+    <h1>{% breadcrumb %}</h1>
 
 ...and this is the result::
 
