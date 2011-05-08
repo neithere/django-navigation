@@ -144,7 +144,7 @@ def get_title(context):
     warnings.warn('Template filter "get_title" is deprecated. Use "breadcrumb"'
                   ' tag instead. See django-navigation documentation for'
                   ' details.', DeprecationWarning)
-    return find_crumb(request)
+    return find_crumb(context['request'])
 
 @register.filter
 def get_sections(request):
@@ -184,7 +184,7 @@ def get_breadcrumb_trail(context):
     """ Returns the trail of :term:`breadcrumbs`. Each breadcrumb is
     represented by a :class:`navigation.helpers.Crumb` instance.
     """
-    return _get_trail(request, exclude_section=False)
+    return _get_trail(context['request'], exclude_section=False)
 
 @register.filter
 def get_navigation(request):
